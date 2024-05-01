@@ -53,3 +53,20 @@ def handle_client(client_socket):
         print("Exception:", e)
     finally:
         client_socket.close()
+def main():
+    # load user scores from file
+    try:
+        with open('user_scores.json', 'r') as file:
+            user_scores = json.load(file)
+    except FileNotFoundError:
+        user_scores = {}
+    
+    # pang create ng socket object
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # bind the socket to a host and port
+    server_socket.bind(('0.0.0.0', 8888))
+    
+    # listen for incoming connections
+    server_socket.listen(5)
+    print("[+] Server is listening for connections...")
