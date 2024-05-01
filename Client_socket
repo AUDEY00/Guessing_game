@@ -1,0 +1,8 @@
+import socket
+
+def main():
+    while True:
+        #create ng socket object
+        Client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #ip address para iconnect sa server
+        Client_socket.connect(('192.168.1.15', 8888))
