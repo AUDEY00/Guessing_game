@@ -6,3 +6,19 @@ def main():
         Client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #ip address para iconnect sa server
         Client_socket.connect(('192.168.1.15', 8888))
+
+        name = input("Enter your name: ")
+        while True:
+            Difficulty = input("Choose difficulty (easy, medium, hard): ").lower()
+            if Difficulty in ['easy', 'medium', 'hard']:
+                if Difficulty == 'easy':
+                    Difficulty_num = 50
+                elif Difficulty == 'medium':
+                    Difficulty_num = 100
+                elif Difficulty == 'hard':
+                    Difficulty_num = 500
+                break
+            else:
+                print("Invalid difficulty choice. Please choose from easy, medium, or hard.")
+         #to send the name of users and difficulty sa server      
+        Client_socket.send(f"{name},{Difficulty_num}".encode())
