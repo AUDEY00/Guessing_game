@@ -70,3 +70,19 @@ def main():
     # listen for incoming connections
     server_socket.listen(5)
     print("[+] Server is listening for connections...")
+    while True:
+        # accept a new connection
+        client_socket, addr = server_socket.accept()
+        print("[+] Accepted connection from:", addr)
+        
+        # start a new thread to handle the client
+        client_handler = threading.Thread(target=handle_client, args=(client_socket,))
+        client_handler.start()
+        
+        # display leaderboard when client disconnects
+        print("[+] User disconnected. Leaderboard:")
+        for name, score_info in sorted(user_scores.items(), key=lambda x: x[1]['score']):
+            print(f"{name}: Score - {score_info['score']}, Difficulty - {score_info['difficulty']}")
+
+if __name__ == "__main__":
+    main()
