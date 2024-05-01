@@ -28,3 +28,18 @@ def handle_client(client_socket):
             secret_number = random.randint(1, difficulty)
             
             attempts = 0
+            while True:
+                # receive the user's guess
+                guess = int(client_socket.recv(1024).decode())
+                attempts += 1
+                
+                # for checking kung tama ba yung guess ng user o hindi
+                if guess == secret_number:
+                    user_scores[name]['score'] = min(user_scores[name]['score'], attempts)
+                    client_socket.send(f"Congratulations! You guessed the number in {attempts} attempts.\nYour score: {user_scores[name]['score']}\n".encode())
+                    break
+                elif guess < secret_number:
+                    client_socket.send(b"Your guess is too low. Try again.\n")
+                else:
+                    client_socket.send(b"Your guess is too high. Try again.\n")
+
