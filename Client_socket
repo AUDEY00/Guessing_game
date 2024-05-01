@@ -22,3 +22,21 @@ def main():
                 print("Invalid difficulty choice. Please choose from easy, medium, or hard.")
          #to send the name of users and difficulty sa server      
         Client_socket.send(f"{name},{Difficulty_num}".encode())
+        #looping the uesers guess
+        while True:
+            Guess = input("Enter your guess: ")
+            if Guess.isdigit():
+                Client_socket.send(Guess.encode())
+                response = Client_socket.recv(1024).decode()
+                print(response)
+                if "Congratulations" in response:
+                    break
+            else:
+                print("Invalid input. Please enter a number.")
+    
+        Play_again = input("Do you want to play again? (yes/no): ").lower()
+        if Play_again != 'yes':
+            break
+        Client_socket.close()
+if __name__ == "__main__":
+    main()
