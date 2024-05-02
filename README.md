@@ -45,19 +45,25 @@ def handle_client(client_socket):
                     client_socket.send(b"Your guess is too low. Try again.\n")
                 else:
                     client_socket.send(b"Your guess is too high. Try again.\n") 
-            # to displaye the leaderboard when the user disconnect to the server
-            print("[+] User disconnected. Leaderboard:")
-            for name, score_info in sorted(user_scores.items(), key=lambda x: x[1]['score']):
-                # to get and know the difficulty that user selected
-                difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
-                print(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}")
+           
     finally:
         client_socket.close()
 def main():  
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind(('192.168.1.11', 8888))
+    server_socket.listen(5)
+    print("[+] Server is listening for connections...")
+    
+    while True:
+        client_socket, addr = server_socket.accept()
+        print("[+] Accepted connection from:", addr)
+        client_handler = threading.Thread(target=handle_client, args=(client_socket,))
+        client_handler.start()
+        print("[+] User disconnected. Leaderboard:")
+        for name, score_info in sorted(user_scores.items(), key=lambda x: x[1]['score']):
+            print(f"{name}: Score- {score_info['score']}, Difficulty - {score_info['difficulty']}")
     # pang create ng socket object
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
- 
-
 if __name__ == "__main__":
     main()
