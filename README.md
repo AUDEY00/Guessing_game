@@ -57,8 +57,6 @@ def handle_client(client_socket):
                 # to get and know the difficulty that user selected
                 difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
                 print(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}")
-    except Exception as e:
-        print("Exception:", e)
     finally:
         client_socket.close()
 def main():
