@@ -8,8 +8,8 @@ def handle_client(client_socket):
     
     # dictionary para e convert yung number sa napili ng user ng difficulty
     difficulty_setter = {50: 'easy', 100: 'medium', 500: 'hard'}
-     try:
-        while True:
+     
+    while True:
             # for receiving the users data
             data = client_socket.recv(1024).decode()
             if not data:
@@ -48,8 +48,6 @@ def handle_client(client_socket):
                 difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
                 print(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}")
            
-    finally:
-        client_socket.close()
 def main():  
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(('192.168.1.11', 8888))
