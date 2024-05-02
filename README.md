@@ -1,7 +1,5 @@
 import socket 
 import threading
-import json
-
 
 user_scores = {}
 
