@@ -45,6 +45,9 @@ def handle_client(client_socket):
                     client_socket.send(b"Your guess is too low. Try again.\n")
                 else:
                     client_socket.send(b"Your guess is too high. Try again.\n") 
+            # to displaye the leaderboard when the user disconnect to the server
+            print("[+] User disconnected. Leaderboard:")
+            for name, score_info in sorted(user_scores.items(), key=lambda x: x[1]['score']):
                 # to get and know the difficulty that user selected
                 difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
                 print(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}")
