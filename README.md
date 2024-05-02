@@ -31,6 +31,9 @@ def handle_client(client_socket):
             while True:
                 # receive the user's guess
                 guess = int(client_socket.recv(1024).decode())
+                if guess < 1 or guess > difficulty:
+                    client_socket.send(b"Invalid guess. Please choose a number within the specified range.\n")
+                    continue
                 attempts += 1
                 
                 # for checking kung tama ba yung guess ng user o hindi
