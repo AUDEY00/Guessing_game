@@ -40,6 +40,12 @@ def handle_client(client_socket):
                 if guess == secret_number:
                     user_scores[name]['score'] = min(user_scores[name]['score'], attempts)
                     client_socket.send(f"Congratulations! You guessed the number in {attempts} attempts.\nYour score: {user_scores[name]['score']}\n".encode())
+                    
+                     with open('leaderboard.txt', 'w') as file:
+                        for name, score_info in sorted(user_scores.items(), key=lambda x: x[1]['score']):
+                            difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
+                            file.write(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}\n")
+                        print("Leaderboard saved successfully.")
                     break
                 elif guess < secret_number:
                     client_socket.send(b"Your guess is too low. Try again.\n")
