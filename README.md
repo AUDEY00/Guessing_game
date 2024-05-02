@@ -48,18 +48,9 @@ def handle_client(client_socket):
                 # to get and know the difficulty that user selected
                 difficulty_word = difficulty_setter.get(score_info['difficulty'], 'unknown')
                 print(f"{name}: Score - {score_info['score']}, Difficulty - {difficulty_word}")
-    except Exception as e:
-        print("Exception:", e)
     finally:
         client_socket.close()
-def main():
-    # load user scores from file
-    try:
-        with open('user_scores.json', 'r') as file:
-            user_scores = json.load(file)
-    except FileNotFoundError:
-        user_scores = {}
-    
+def main():  
     # pang create ng socket object
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     
